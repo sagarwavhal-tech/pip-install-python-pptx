@@ -1,0 +1,128 @@
+generate_kpis.py
+python generate_kpis.py
+from pptx import Presentation
+from pptx.util import Inches, Pt
+from pptx.enum.text import PP_ALIGN
+from pptx.dml.color import RGBColor
+
+# Initialize presentation
+prs = Presentation()
+prs.slide_width = Inches(13.333)  # Widescreen 16:9
+prs.slide_height = Inches(7.5)
+
+# Color Palette
+DARK_BLUE = RGBColor(16, 44, 87)
+LIGHT_BLUE = RGBColor(53, 162, 235)
+TEXT_DARK = RGBColor(33, 33, 33)
+BG_LIGHT = RGBColor(245, 247, 248)
+
+def apply_background(slide):
+    background = slide.background
+    fill = background.fill
+    fill.solid()
+    fill.fore_color.rgb = BG_LIGHT
+
+def add_title(slide, text):
+    title_box = slide.shapes.add_textbox(Inches(0.5), Inches(0.4), Inches(12.333), Inches(1.0))
+    tf = title_box.text_frame
+    tf.word_wrap = True
+    p = tf.paragraphs[0]
+    p.text = text
+    p.font.size = Pt(28)
+    p.font.bold = True
+    p.font.color.rgb = DARK_BLUE
+    p.font.name = "Arial"
+
+# Slide 1: Title Slide
+slide_layout = prs.slide_layouts[6] # Blank
+slide = prs.slides.add_slide(slide_layout)
+apply_background(slide)
+
+title_box = slide.shapes.add_textbox(Inches(1.0), Inches(2.5), Inches(11.333), Inches(3.0))
+tf = title_box.text_frame
+p = tf.paragraphs[0]
+p.text = "Human Resource & Administration Department"
+p.font.size = Pt(40)
+p.font.bold = True
+p.font.color.rgb = DARK_BLUE
+p.font.name = "Arial"
+
+p2 = tf.add_paragraph()
+p2.text = "Corrected Master Org Chart & KPI Framework (FY 2026-27)"
+p2.font.size = Pt(22)
+p2.font.color.rgb = LIGHT_BLUE
+p2.font.name = "Arial"
+
+# KPI Data to populate slides dynamically
+slides_data = [
+    {
+        "title": "KPIs of SAGAR WAVWAL (Manager - HR Operations & Admin Execution)",
+        "content": [
+            "Recruitment & Selection (25%): Close 23 open positions before Q2 2026-27; finalize BINA site hiring by July 2026; onboard tier-2 recruitment personnel; implement Naukri/LinkedIn enterprise tools; track early exits (<6 months).",
+            "Training & Development (15%): 100% compliance with corporate training calendar; ensure 10 hours of training per person across HO/sites; develop specialized training for top-rated employees by June 2026.",
+            "Employee Life-Cycle Management (20%): Maintain strict policy TATs; standardise GAT hiring plan (Campus, Training, Rotation) by Q2 2026; manage confirmations, appointments, PIPs, and exits.",
+            "HO Administration (15%): Oversee HO infrastructure; implement automated dashboard for rent agreements, insurances, AMCs, licenses, and assets by Q2 2026-27; manage admin staff.",
+            "Policy Management (15%): Finalize Code of Conduct, Anti-Bribery, Workplace Violence, and Discipline policies by Q2; monitor field implementation.",
+            "HR MIS & Analytics (10%): Finalize and launch centralized Master HR Dashboard by July 2026 with monthly iterations."
+        ]
+    },
+    {
+        "title": "KPIs of KANCHAN GHANEKAR (Manager - Corporate HR, Engagement & Facilities)",
+        "content": [
+            "Corporate Sourcing & Policy Alignment (30%): Support closure of 23 open corporate roles by Q2; close corporate BINA roles by July 2026; update and maintain centralized JD depository; maintain active resume database.",
+            "Training & Development Tracking (25%): Share employee-wise Training MIS monthly with HODs; track 100% completion of training calendar; source external training for TM and SM cadres.",
+            "Employee Engagement & Culture (25%): Finalize annual Employee Engagement calendar by July 2026; deploy Employee Satisfaction Surveys (ESS) twice a year; integrate tracking into a unified monthly MIS.",
+            "HO Infrastructure & Staff Welfare (20%): Manage rent agreements, insurances, AMCs, and licenses; maintain welfare trackers (Mediclaim, Term Life, Medical checks); finalize infrastructure policy for new office expansion by August 2026."
+        ]
+    },
+    {
+        "title": "KPIs of ROSHAN SAWANT (Assistant Manager - Payroll & Statutory Compliance)",
+        "content": [
+            "Payroll Management & Audit (30%): Document standard TATs for Payroll audits, A&F reports, and MIS; enforce new wage codes across all business units (JNKI, JNKG, JNKR, FTE, TPE, consultants); process contractor payments by the 7th and compliances by the 14th.",
+            "Statutory Compliances - Sites, Shops & HO (40%): Ensure monthly project compliances are updated; achieve 100% zero-balance compliance hold for Projects 48, 59, 60, and 67 by July 2026; launch Annual Compliance Return Tracker by July 2026.",
+            "Site & Shop Administration (20%): Maintain monthly administrative compliance at shop/site levels; organize monthly site admin team meetings; release finalized Site Administration MIS starting July 2026.",
+            "Performance Management Process (10%): Secure organizational target settings by March 15, 2026; kickstart appraisal evaluations in February 2027 for a hard completion by March 31, 2027."
+        ]
+    },
+    {
+        "title": "KPIs of ANUSHKA MUDHOLKAR (Executive - Employee Life-Cycle & HRMS Digitization)",
+        "content": [
+            "Employee Life-Cycle Management (20%): Audit TATs for all HR policies and SOPs; distribute monthly tracking MIS for appointments, confirmations, and exits; completely digitize appointment/confirmation letters via HRMS.",
+            "Induction & Database Management (20%): Ensure 100% onboarding compliance for new hires at HO, shops, and sites; standardize corporate induction workflow and share metrics via the dashboard.",
+            "Retention & Turnover Analytics (15%): Deliver Monthly Attrition Report by the 7th of every month; finalize structured retention frameworks for top performers by July 2026; run quarterly focus groups with GAT batches.",
+            "Exit Management (20%): Manage separation processes (resignations, clearances, exit interviews); transition and fully automate the Exit Management module onto the HRMS platform.",
+            "HR Policies, Reports & SOPs (25%): Own master employee database integrity; author, update, and refine internal HR department policies and operational SOP frameworks."
+        ]
+    },
+    {
+        "title": "KPIs of PRASHANT MEMANE (Head - IT Infrastructure & Systems Security)",
+        "content": [
+            "IT Infrastructure & Asset Management (40%): Draft master IT Infrastructure policy for HO and site members; implement automated digital asset tracking; publish monthly IT inventory stock reports starting August 2026.",
+            "Security & Compliance (30%): Finalize network architecture and IT infrastructure plans for the upcoming corporate office shift by August 2026; benchmark legal IT compliance and licensing software requirements.",
+            "IT Policy Formulation & Implementation (30%): Modernize and release the amended corporate IT policy by July 2026; ensure total systemic rollout and employee alignment across all departments by August 2026."
+        ]
+    }
+]
+
+# Generate Content Slides
+for slide_data in slides_data:
+    slide = prs.slides.add_slide(slide_layout)
+    apply_background(slide)
+    add_title(slide, slide_data["title"])
+    
+    # Text box for bullet points
+    content_box = slide.shapes.add_textbox(Inches(0.5), Inches(1.6), Inches(12.333), Inches(5.4))
+    tf = content_box.text_frame
+    tf.word_wrap = True
+    
+    for i, point in enumerate(slide_data["content"]):
+        p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
+        p.text = "• " + point
+        p.font.size = Pt(15)
+        p.font.color.rgb = TEXT_DARK
+        p.font.name = "Arial"
+        p.space_after = Pt(14)
+
+# Save the presentation
+prs.save("Corrected_HR_Admin_KPIs_2026-27.pptx")
+print("Presentation successfully created and saved as 'Corrected_HR_Admin_KPIs_2026-27.pptx'")
